@@ -9,6 +9,10 @@ buildscript {
                             min    : 21,
                             target : 29
                     ]
+            ],
+            version: [
+                    code: 1,
+                    name: "0.0.1"
             ]
     ]
 
@@ -45,6 +49,8 @@ allprojects {
         google()
         jcenter()
     }
+
+    version = general.version.code
 }
 
 task clean(type: Delete) {

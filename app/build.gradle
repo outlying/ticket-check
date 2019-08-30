@@ -8,8 +8,8 @@ android {
         applicationId "com.antyzero.ticket.app"
         minSdkVersion general.android.sdk.min
         targetSdkVersion general.android.sdk.target
-        versionCode 1
-        versionName "1.0"
+        versionCode general.version.code
+        versionName general.version.name
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
