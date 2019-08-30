@@ -17,7 +17,7 @@ class TicketCheck(
             genericOfInterface(
                 it,
                 TicketValidator::class
-            ).first().classifier as KClass<Ticket.Data> to it
+            ).first().classifier as KClass<in Ticket.Data> to it
         }
         .toMap()
 

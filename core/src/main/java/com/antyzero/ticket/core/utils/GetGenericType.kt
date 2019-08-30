@@ -1,8 +1,11 @@
 package com.antyzero.ticket.core.utils
 
+import java.lang.reflect.ParameterizedType
+import java.lang.reflect.TypeVariable
 import kotlin.reflect.KClass
 import kotlin.reflect.KType
 import kotlin.reflect.full.allSupertypes
+import kotlin.reflect.full.starProjectedType
 
 fun genericOfInterface(input: Any, interfaceClass: KClass<*>): List<KType> {
 
@@ -19,4 +22,9 @@ fun genericOfInterface(input: Any, interfaceClass: KClass<*>): List<KType> {
     return interfaceType.arguments
         .map { it.type }
         .requireNoNulls()
+}
+
+fun genericArgument(input: Any) {
+
+
 }

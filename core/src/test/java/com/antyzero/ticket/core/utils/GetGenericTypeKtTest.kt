@@ -1,8 +1,8 @@
 package com.antyzero.ticket.core.utils
 
+import com.antyzero.ticket.core.model.Ticket
 import com.google.common.truth.Truth.assertThat
 import org.junit.jupiter.api.Test
-import kotlin.reflect.KClass
 
 internal class GetGenericTypeKtTest {
 
@@ -12,7 +12,7 @@ internal class GetGenericTypeKtTest {
             genericOfInterface(
                 SameString(),
                 Some::class
-            ).first().classifier as KClass<String>
+            ).first().classifier
         ).isEqualTo(String::class)
     }
 
@@ -39,8 +39,22 @@ internal class GetGenericTypeKtTest {
         }
     }
 
+    @Test
+    internal fun `generic type`() {
+        val input: Ticket<TestData> = Ticket(
+            id = "ID",
+            status = Ticket.Status.Invalid,
+            data = TestData()
+        )
+        assertThat(
+            genericArgument(input)
+        ).isEqualTo(TestData::class)
+    }
+
     interface Some<T>
     interface Other<T>
 
     class SameString : Some<String>
+
+    class TestData : Ticket.Data()
 }

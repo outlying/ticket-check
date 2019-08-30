@@ -19,4 +19,8 @@ class Ticket<T : Ticket.Data>(
 
         object Invalid : Status()
     }
+
+    override fun toString(): String {
+        return "Ticket(id=$id, status=$status, data=$data)"
+    }
 }
