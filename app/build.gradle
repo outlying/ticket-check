@@ -21,7 +21,7 @@ android {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin.general}"
     implementation "androidx.appcompat:appcompat:${versions.android.x.appcompat}"
     implementation "androidx.core:core-ktx:${versions.android.x.appcompat}"
     implementation "androidx.constraintlayout:constraintlayout:${versions.android.x.constraintlayout}"

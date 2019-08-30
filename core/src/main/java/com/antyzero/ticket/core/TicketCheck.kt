@@ -12,7 +12,7 @@ class TicketCheck(
 ) {
 
     @Suppress("UNCHECKED_CAST")
-    private val ticketValidators: Map<KClass<Ticket.Data>, TicketValidator<*>> = validators
+    private val ticketValidators: Map<KClass<in Ticket.Data>, TicketValidator<*>> = validators
         .map {
             genericOfInterface(
                 it,

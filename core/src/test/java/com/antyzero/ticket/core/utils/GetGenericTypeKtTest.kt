@@ -2,12 +2,18 @@ package com.antyzero.ticket.core.utils
 
 import com.google.common.truth.Truth.assertThat
 import org.junit.jupiter.api.Test
+import kotlin.reflect.KClass
 
 internal class GetGenericTypeKtTest {
 
     @Test
     fun genericOfInterface() {
-        assertThat(genericOfInterface(SameString(), Some::class)).isEqualTo(String::class)
+        assertThat(
+            genericOfInterface(
+                SameString(),
+                Some::class
+            ).first().classifier as KClass<String>
+        ).isEqualTo(String::class)
     }
 
     @Test
