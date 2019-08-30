@@ -1,7 +1,19 @@
 apply plugin: 'java-library'
+apply plugin: 'kotlin'
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
+    implementation "org.threeten:threetenbp:${versions.threetenbp}"
+    implementation "org.jetbrains.kotlin:kotlin-reflect"
+
+    testImplementation "com.google.truth:truth:${versions.truth}"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${versions.junit5}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${versions.junit5}"
+}
+
+test {
+    useJUnitPlatform()
 }
 
 sourceCompatibility = "7"
