@@ -31,6 +31,7 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:${versions.android.x.navigation}"
     implementation "androidx.navigation:navigation-ui-ktx:${versions.android.x.navigation}"
 
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation "junit:junit:${versions.junit4}"
 
     androidTestImplementation "androidx.test:runner:${versions.android.x.test.runner}"
