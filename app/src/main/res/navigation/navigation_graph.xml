@@ -9,6 +9,15 @@
         android:id="@+id/ticketListFragment"
         android:name="com.antyzero.ticket.app.screen.TicketListFragment"
         android:label="fragment_ticket_list"
-        tools:layout="@layout/fragment_ticket_list" />
+        tools:layout="@layout/fragment_ticket_list" >
+        <action
+            android:id="@+id/action_ticketListFragment_to_addTicketFragment"
+            app:destination="@id/addTicketFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addTicketFragment"
+        android:name="com.antyzero.ticket.app.screen.AddTicketFragment"
+        android:label="fragment_add_ticket"
+        tools:layout="@layout/fragment_add_ticket" />
 
 </navigation>
