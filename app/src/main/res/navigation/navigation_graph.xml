@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/ticketListFragment">
+
+    <fragment
+        android:id="@+id/ticketListFragment"
+        android:name="com.antyzero.ticket.app.screen.TicketListFragment"
+        android:label="fragment_ticket_list"
+        tools:layout="@layout/fragment_ticket_list" >
+        <action
+            android:id="@+id/action_ticketListFragment_to_addTicketFragment"
+            app:destination="@id/addTicketFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addTicketFragment"
+        android:name="com.antyzero.ticket.app.screen.AddTicketFragment"
+        android:label="fragment_add_ticket"
+        tools:layout="@layout/fragment_add_ticket" />
+
+</navigation>
