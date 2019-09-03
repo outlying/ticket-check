@@ -21,8 +21,17 @@ class TicketCheck(
         }
         .toMap()
 
-    fun addTicket(ticket: Ticket<*>): Ticket<*> {
-        return ticket
+    @Suppress("UNCHECKED_CAST")
+    fun <T : Ticket.Data> addTicket(ticket: Ticket<T>): Ticket<*> {
+        val dataType = ticket.dataType() as KClass<in Ticket.Data>
+        val status = (ticketValidators[dataType] as? TicketValidator<T>)?.isValid(ticket)
+            ?: throw IllegalStateException("Given ticket with data type $dataType is not supported")
+
+        val verifiedTicket = ticket.copy(status = status)
+
+        repository.addTicket(verifiedTicket)
+
+        return verifiedTicket
     }
 
     fun tickets(): Collection<Ticket<*>> {
@@ -30,6 +39,7 @@ class TicketCheck(
     }
 
     private fun <T : Ticket.Data> validate(ticket: Ticket<T>): Ticket.Status? {
+        @Suppress("UNCHECKED_CAST")
         return (ticketValidators.values.first() as TicketValidator<T>).isValid(ticket)
     }
 }

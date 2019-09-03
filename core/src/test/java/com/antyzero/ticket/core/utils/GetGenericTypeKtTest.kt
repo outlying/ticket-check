@@ -39,18 +39,6 @@ internal class GetGenericTypeKtTest {
         }
     }
 
-    @Test
-    internal fun `generic type`() {
-        val input: Ticket<TestData> = Ticket(
-            id = "ID",
-            status = Ticket.Status.Invalid,
-            data = TestData()
-        )
-        assertThat(
-            genericArgument(input)
-        ).isEqualTo(TestData::class)
-    }
-
     interface Some<T>
     interface Other<T>
 

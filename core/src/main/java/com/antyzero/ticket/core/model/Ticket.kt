@@ -2,13 +2,15 @@ package com.antyzero.ticket.core.model
 
 import org.threeten.bp.LocalDate
 
-class Ticket<T : Ticket.Data>(
+data class Ticket<T : Ticket.Data>(
     val id: Any,
     val status: Status,
     val data: T
 ) {
 
     abstract class Data
+
+    internal fun dataType() = data::class
 
     open class Status {
 
