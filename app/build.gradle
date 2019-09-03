@@ -35,5 +35,6 @@ dependencies {
     testImplementation "junit:junit:${versions.junit4}"
 
     androidTestImplementation "androidx.test:runner:${versions.android.x.test.runner}"
+    androidTestImplementation "androidx.test.ext:junit:${versions.android.x.test.runner}"
     androidTestImplementation "androidx.test.espresso:espresso-core:${versions.android.x.test.espresso}"
 }
