@@ -4,6 +4,7 @@ import com.antyzero.ticket.core.model.Ticket
 import com.antyzero.ticket.core.repository.DumbRepository
 import com.antyzero.ticket.core.validator.TicketValidator
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 
 internal class TicketCheckTest {
@@ -17,13 +18,15 @@ internal class TicketCheckTest {
     internal fun `unsupported ticked have to fail`() {
         try {
             TicketCheck(DumbRepository, listOf(TestValidator())).apply {
-                addTicket(
-                    Ticket(
-                        id = "asd",
-                        data = TestDataButDifferent(),
-                        status = Ticket.Status.Invalid
+                runBlocking {
+                    addTicket(
+                        Ticket(
+                            id = "asd",
+                            data = TestDataButDifferent(),
+                            status = Ticket.Status.Invalid
+                        )
                     )
-                )
+                }
             }
         } catch (e: Exception) {
             assertThat(e::class.java).isEqualTo(IllegalStateException::class.java)

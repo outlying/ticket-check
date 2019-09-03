@@ -4,11 +4,11 @@ import com.antyzero.ticket.core.model.Ticket
 
 interface Repository {
 
-    fun addTicket(ticket: Ticket<*>)
+    suspend fun addTicket(ticket: Ticket<*>)
 
-    fun updateTicket(ticket: Ticket<*>)
+    suspend fun updateTicket(ticket: Ticket<*>)
 
-    fun removeTicket(ticket: Ticket<*>)
+    suspend fun removeTicket(ticket: Ticket<*>)
 
-    fun all(): Collection<Ticket<*>>
+    suspend fun all(): Collection<Ticket<*>>
 }

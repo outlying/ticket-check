@@ -22,7 +22,7 @@ class TicketCheck(
         .toMap()
 
     @Suppress("UNCHECKED_CAST")
-    fun <T : Ticket.Data> addTicket(ticket: Ticket<T>): Ticket<*> {
+    suspend fun <T : Ticket.Data> addTicket(ticket: Ticket<T>): Ticket<*> {
         val dataType = ticket.dataType() as KClass<in Ticket.Data>
         val status = (ticketValidators[dataType] as? TicketValidator<T>)?.isValid(ticket)
             ?: throw IllegalStateException("Given ticket with data type $dataType is not supported")
