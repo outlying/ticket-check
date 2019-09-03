@@ -9,6 +9,8 @@ dependencies {
     implementation "org.threeten:threetenbp:${versions.threetenbp}"
     implementation "org.jetbrains.kotlin:kotlin-reflect"
 
+    implementation "com.squareup.moshi:moshi-kotlin:${versions.moshi}"
+
     testImplementation "com.google.truth:truth:${versions.truth}"
     testImplementation "org.junit.jupiter:junit-jupiter-api:${versions.junit5}"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${versions.junit5}"
