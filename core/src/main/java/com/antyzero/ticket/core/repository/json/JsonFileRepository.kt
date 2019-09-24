@@ -61,7 +61,7 @@ class JsonFileRepository(private val file: File) : Repository {
         fun createAdapter(): JsonAdapter<List<Ticket<*>>> {
 
             val moshi = Moshi.Builder().apply {
-                // TODO add factory deserializer
+                add(JsonTicket::class.java, TicketAdapter)
             }.build()
 
             return moshi.adapter(

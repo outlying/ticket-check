@@ -9,10 +9,10 @@ class JsonFileRepositoryTest {
 
     @Test
     fun `verify adapter`() {
-        val ticket = Ticket(id = "", status = Ticket.Status.Invalid, data = WierdoData("name"))
+        val ticket = Ticket(id = "some ID", status = Ticket.Status.Invalid, data = WierdoData("name"))
         val adapter = JsonFileRepository.createAdapter()
 
-        val result = adapter.toJson(listOf(ticket))
+        val result = adapter.toJson(listOf(ticket)).also { println(it) }
 
         assertThat(result).isNotEmpty()
     }

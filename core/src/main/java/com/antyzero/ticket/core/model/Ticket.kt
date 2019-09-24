@@ -12,7 +12,7 @@ data class Ticket<T : Ticket.Data>(
 
     internal fun dataType() = data::class
 
-    open class Status {
+    sealed class Status {
 
         /**
          * Indicated that ticket is valid and till when
