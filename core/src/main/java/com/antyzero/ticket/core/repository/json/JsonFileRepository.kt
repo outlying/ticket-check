@@ -3,6 +3,7 @@ package com.antyzero.ticket.core.repository.json
 import com.antyzero.ticket.core.model.Ticket
 import com.antyzero.ticket.core.repository.Repository
 import com.antyzero.ticket.core.repository.json.model.JsonTicket
+import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types.newParameterizedType
 import java.io.File
@@ -11,25 +12,25 @@ import java.io.File
 class JsonFileRepository(private val file: File) : Repository {
 
     private val tickets: MutableSet<Ticket<*>>
-    private val moshi: Moshi = Moshi.Builder().apply {
-        // TODO add factory deserializer
-
-    }.build()
-    private val adapter = moshi.adapter<List<Ticket<*>>>(
-        newParameterizedType(
-            List::class.java,
-            JsonTicket::class.java
-        )
-    )
+    private val adapter = createAdapter()
 
     init {
         if (file.exists()) {
             val readText = file.readText()
 
-            tickets = adapter.fromJson(readText)?.toSet()?.toMutableSet()
-                ?: throw IllegalStateException("Stuff went wrong")
+            if (readText.isBlank()) {
+                tickets = mutableSetOf()
+                dumpCurrentListToFile()
+            } else {
+                tickets = adapter.fromJson(readText)?.toSet()?.toMutableSet()
+                    ?: throw IllegalStateException("Stuff went wrong")
+            }
         } else {
+            if (!file.createNewFile()) {
+                throw IllegalStateException("Unable to create file")
+            }
             tickets = mutableSetOf()
+            dumpCurrentListToFile()
         }
     }
 
@@ -52,6 +53,23 @@ class JsonFileRepository(private val file: File) : Repository {
     }
 
     private fun dumpCurrentListToFile() {
+        file.writeText(adapter.toJson(tickets.toList()))
+    }
 
+    companion object {
+
+        fun createAdapter(): JsonAdapter<List<Ticket<*>>> {
+
+            val moshi = Moshi.Builder().apply {
+                // TODO add factory deserializer
+            }.build()
+
+            return moshi.adapter(
+                newParameterizedType(
+                    List::class.java,
+                    JsonTicket::class.java
+                )
+            )
+        }
     }
 }
