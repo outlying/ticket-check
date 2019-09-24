@@ -12,9 +12,28 @@ object TicketAdapter : JsonAdapter<Ticket<*>>() {
     @FromJson
     override fun fromJson(reader: JsonReader): Ticket<*> {
 
-        return Ticket(
-            "123", Ticket.Status.Invalid, TestData
-        )
+        reader.beginObject()
+
+        reader.skipName()
+        val id = reader.nextString()
+
+        reader.skipName()
+        val statusType = reader.nextString()
+
+        reader.skipName()
+        val statusClass = Ticket.Status::class.java.classLoader.loadClass(statusType)
+        val status = moshi.adapter(statusClass).fromJson(reader) as Ticket.Status
+
+        reader.skipName()
+        val dataType = reader.nextString()
+
+        reader.skipName()
+        val dataClass = Ticket.Status::class.java.classLoader.loadClass(dataType)
+        val data = moshi.adapter(dataClass).fromJson(reader) as Ticket.Data
+
+        reader.endObject()
+
+        return Ticket(id, status, data)
     }
 
     @ToJson
@@ -30,14 +49,14 @@ object TicketAdapter : JsonAdapter<Ticket<*>>() {
         writer.value(value.id.toString())
 
         writer.name("statusType")
-        writer.value(value.status::class.java.canonicalName.toString())
+        writer.value(value.status::class.java.name.toString())
 
         writer.name("status")
         adapterAny.toJson(writer, value.status)
 
         val dataType = value.dataType().java
         writer.name("dataType")
-        writer.value(dataType.canonicalName.toString())
+        writer.value(dataType.name.toString())
 
         writer.name("data")
         adapterAny.toJson(writer, value.data)
