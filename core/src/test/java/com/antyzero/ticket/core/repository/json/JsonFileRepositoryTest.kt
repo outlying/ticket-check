@@ -30,6 +30,10 @@ class JsonFileRepositoryTest {
 
         val result = adapter.fromJson(json)
 
-        assertThat(result).isNotNull()
+        with(result!!.first()) {
+            assertThat(id).isEqualTo("some ID")
+            assertThat(status).isEqualTo(Ticket.Status.Valid(LocalDate.MIN))
+            assertThat(data).isEqualTo(WierdoData("name"))
+        }
     }
 }
