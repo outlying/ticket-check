@@ -1,12 +1,13 @@
 package com.antyzero.ticket.core.repository
 
-import com.antyzero.ticket.core.utils.createFile
+import com.antyzero.ticket.core.model.Ticket
 import com.antyzero.ticket.core.utils.createRepository
 import com.antyzero.ticket.core.utils.createTicket
+import com.antyzero.ticket.core.utils.tmpFile
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
-import kotlin.random.Random
+import org.threeten.bp.LocalDate
 
 internal class RepositoryTest {
 
@@ -22,17 +23,13 @@ internal class RepositoryTest {
     }
 
     @Test
-    internal fun pasdapsdp() {
-        val id = Random.nextLong()
-        val file = createFile(id)
-        val ticket = createTicket()
-
+    internal fun `preserve ticket for new repository instance`() = tmpFile { file ->
+        val ticket = createTicket(status = Ticket.Status.Valid(until = LocalDate.MAX))
         runBlocking { createRepository(file).addTicket(ticket) }
 
-        val all = runBlocking { createRepository(file).all() }
-        assertThat(all).contains(ticket)
+        val allTickets = runBlocking { createRepository(file).all() }
 
-        file.delete()
+        assertThat(allTickets).contains(ticket)
     }
 
     @Test

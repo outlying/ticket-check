@@ -9,11 +9,12 @@ import kotlin.random.Random
 
 
 fun createTicket(
-    id: Any = Random.nextLong()
+    id: String = Random.nextInt().absoluteValue.toString(),
+    status: Ticket.Status = Ticket.Status.Invalid
 ): Ticket<*> {
     return Ticket(
         id = id,
-        status = Ticket.Status.Invalid,
+        status = status,
         data = WierdoData(
             Random.nextLong().toString()
         )
@@ -30,8 +31,17 @@ fun createRepository(file: File = createFile()): Repository {
     }
 }
 
-fun createFile(id: Long = Random.nextLong().hashCode().absoluteValue.toLong()): File {
+fun createFile(id: Long = randomFileId()): File {
     return File.createTempFile(id.toString(), ".json").also {
         println("Created JSON file $it")
     }
 }
+
+fun tmpFile(id: Long = randomFileId(), block: (File) -> Unit) {
+    with(createFile(id)) {
+        block.invoke(this)
+        delete()
+    }
+}
+
+private fun randomFileId() = Random.nextLong().hashCode().absoluteValue.toLong()

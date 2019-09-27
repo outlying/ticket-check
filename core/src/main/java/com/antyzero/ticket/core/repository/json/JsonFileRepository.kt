@@ -56,6 +56,10 @@ class JsonFileRepository(private val file: File) : Repository {
         file.writeText(adapter.toJson(tickets.toList()))
     }
 
+    override fun toString(): String {
+        return "JsonFileRepository(file=$file, tickets=$tickets)"
+    }
+
     companion object {
 
         fun createAdapter(): JsonAdapter<List<Ticket<*>>> {

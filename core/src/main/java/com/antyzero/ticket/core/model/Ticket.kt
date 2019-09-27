@@ -3,7 +3,7 @@ package com.antyzero.ticket.core.model
 import org.threeten.bp.LocalDate
 
 data class Ticket<T : Ticket.Data>(
-    val id: Any,
+    val id: String,
     val status: Status,
     val data: T
 ) {
