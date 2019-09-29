@@ -12,9 +12,7 @@ object DumbRepository : Repository {
         // do nothing
     }
 
-    override suspend fun removeTicket(ticket: Ticket<*>) {
-        // do nothing
-    }
+    override suspend fun removeTicket(ticket: Ticket<*>): Boolean = false
 
     override suspend fun all(): Collection<Ticket<*>> = emptyList()
 }

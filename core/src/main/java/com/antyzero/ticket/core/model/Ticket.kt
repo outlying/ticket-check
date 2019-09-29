@@ -19,7 +19,10 @@ data class Ticket<T : Ticket.Data>(
          */
         data class Valid(val until: LocalDate) : Status()
 
-        object Invalid : Status()
+        object Invalid : Status() {
+
+            override fun toString() = "Invalid"
+        }
     }
 
     override fun toString(): String {

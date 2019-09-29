@@ -8,7 +8,7 @@ interface Repository {
 
     suspend fun updateTicket(ticket: Ticket<*>)
 
-    suspend fun removeTicket(ticket: Ticket<*>)
+    suspend fun removeTicket(ticket: Ticket<*>): Boolean
 
     suspend fun all(): Collection<Ticket<*>>
 }

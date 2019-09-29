@@ -37,7 +37,14 @@ internal class RepositoryTest {
     }
 
     @Test
-    fun removeTicket() {
+    fun removeTicket() = tmpFile { file ->
+        val ticket = createTicket().also { runBlocking { createRepository(file).addTicket(it) } }
+        val secondRepository = createRepository(file)
+
+        val result = runBlocking { secondRepository.removeTicket(ticket) }
+
+        assertThat(result).isTrue()
+        assertThat(runBlocking { secondRepository.all() }).isEmpty()
     }
 
     @Test

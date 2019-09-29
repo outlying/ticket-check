@@ -43,12 +43,13 @@ class JsonFileRepository(private val file: File) : Repository {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override suspend fun removeTicket(ticket: Ticket<*>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override suspend fun removeTicket(ticket: Ticket<*>): Boolean {
+        val result = tickets.removeAll { it.id == ticket.id }
+        dumpCurrentListToFile()
+        return result
     }
 
     override suspend fun all(): Collection<Ticket<*>> {
-        // TODO read file
         return tickets
     }
 
