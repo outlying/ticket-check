@@ -40,7 +40,10 @@ class JsonFileRepository(private val file: File) : Repository {
     }
 
     override suspend fun updateTicket(ticket: Ticket<*>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (tickets.removeAll { it.id == ticket.id }) {
+            tickets.add(ticket)
+            dumpCurrentListToFile()
+        }
     }
 
     override suspend fun removeTicket(ticket: Ticket<*>): Boolean {

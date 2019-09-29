@@ -33,7 +33,17 @@ internal class RepositoryTest {
     }
 
     @Test
-    fun updateTicket() {
+    fun updateTicket() = tmpFile { file ->
+        val repository = createRepository(file)
+        val ticket = createTicket(status = Ticket.Status.Invalid)
+        runBlocking { repository.addTicket(ticket) }
+        val updatedTicket = ticket.copy(status = Ticket.Status.Valid(until = LocalDate.MAX))
+
+        runBlocking { repository.updateTicket(updatedTicket) }
+
+        with(runBlocking { repository.all().first() }){
+            assertThat(this).isEqualTo(updatedTicket)
+        }
     }
 
     @Test
