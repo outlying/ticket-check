@@ -10,7 +10,7 @@ class LocalViewModelFactory(private val ticketCheck: TicketCheck) : ViewModelPro
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
 
         return when (modelClass) {
-            TicketsViewModel::class -> TicketsViewModel(ticketCheck)
+            TicketsViewModel::class.java -> TicketsViewModel(ticketCheck)
             else -> IllegalArgumentException("Unsupported class type $modelClass")
         } as T
     }

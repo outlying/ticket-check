@@ -26,13 +26,15 @@ android {
 dependencies {
 
     api project(':core')
+    api "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.android.x.lifecycle}"
+    api "androidx.lifecycle:lifecycle-livedata-ktx:${versions.android.x.lifecycle}"
+    api "androidx.lifecycle:lifecycle-extensions:${versions.android.x.lifecycle}"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin.general}"
 
     implementation "androidx.appcompat:appcompat:${versions.android.x.appcompat}"
     implementation "androidx.core:core-ktx:${versions.android.x.appcompat}"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.android.x.lifecycle}"
-    implementation "androidx.lifecycle:lifecycle-extensions:${versions.android.x.lifecycle}"
+
 
     // TODO fix that
     testImplementation 'junit:junit:4.12'
