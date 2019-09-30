@@ -1,40 +1,38 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-
 android {
     compileSdkVersion general.android.sdk.compile
+    // buildToolsVersion "29.0.0" // TODO why is it there?
     defaultConfig {
-        applicationId "com.antyzero.ticket.app"
         minSdkVersion general.android.sdk.min
         targetSdkVersion general.android.sdk.target
         versionCode general.version.code
         versionName general.version.name
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
 }
 
 dependencies {
 
-    implementation project(":core-ui")
+    api project(':core')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin.general}"
     implementation "androidx.appcompat:appcompat:${versions.android.x.appcompat}"
     implementation "androidx.core:core-ktx:${versions.android.x.appcompat}"
-    implementation "androidx.constraintlayout:constraintlayout:${versions.android.x.constraintlayout}"
-    implementation "androidx.navigation:navigation-fragment-ktx:${versions.android.x.navigation}"
-    implementation "androidx.navigation:navigation-ui-ktx:${versions.android.x.navigation}"
 
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    testImplementation "junit:junit:${versions.junit4}"
-
-    androidTestImplementation "androidx.test:runner:${versions.android.x.test.runner}"
-    androidTestImplementation "androidx.test.ext:junit:${versions.android.x.test.runner}"
-    androidTestImplementation "androidx.test.espresso:espresso-core:${versions.android.x.test.espresso}"
+    // TODO fix that
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 }
