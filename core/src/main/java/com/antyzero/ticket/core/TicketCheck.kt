@@ -34,8 +34,8 @@ class TicketCheck(
         return verifiedTicket
     }
 
-    fun tickets(): Collection<Ticket<*>> {
-        return emptyList()
+    suspend fun tickets(): Collection<Ticket<*>> {
+        return repository.all()
     }
 
     private fun <T : Ticket.Data> validate(ticket: Ticket<T>): Ticket.Status? {

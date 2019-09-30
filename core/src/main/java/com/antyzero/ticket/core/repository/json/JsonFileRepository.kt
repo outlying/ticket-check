@@ -6,6 +6,8 @@ import com.antyzero.ticket.core.repository.json.model.JsonTicket
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types.newParameterizedType
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.MainScope
 import java.io.File
 
 
