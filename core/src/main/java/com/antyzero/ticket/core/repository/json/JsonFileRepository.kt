@@ -6,13 +6,13 @@ import com.antyzero.ticket.core.repository.json.model.JsonTicket
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types.newParameterizedType
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.Deferred
 import java.io.File
 
 
 class JsonFileRepository(private val file: File) : Repository {
 
+    private var ongoingFileSave: Deferred<Unit>? = null
     private val tickets: MutableSet<Ticket<*>>
     private val adapter = createAdapter()
 
