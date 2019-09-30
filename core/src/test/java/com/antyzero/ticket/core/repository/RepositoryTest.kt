@@ -56,8 +56,4 @@ internal class RepositoryTest {
         assertThat(result).isTrue()
         assertThat(runBlocking { secondRepository.all() }).isEmpty()
     }
-
-    @Test
-    fun all() {
-    }
 }
