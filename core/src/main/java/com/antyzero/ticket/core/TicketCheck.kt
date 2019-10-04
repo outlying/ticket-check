@@ -8,7 +8,8 @@ import kotlin.reflect.KClass
 
 class TicketCheck(
     private val repository: Repository,
-    validators: Collection<TicketValidator<*>>
+    validators: Collection<TicketValidator<*>>,
+    init: Collection<Init> = emptySet()
 ) {
 
     @Suppress("UNCHECKED_CAST")
@@ -20,6 +21,10 @@ class TicketCheck(
             ).first().classifier as KClass<in Ticket.Data> to it
         }
         .toMap()
+
+    init {
+        init.forEach { it.invoke(this) }
+    }
 
     @Suppress("UNCHECKED_CAST")
     suspend fun <T : Ticket.Data> addTicket(ticket: Ticket<T>): Ticket<*> {
@@ -42,4 +47,6 @@ class TicketCheck(
         @Suppress("UNCHECKED_CAST")
         return (ticketValidators.values.first() as TicketValidator<T>).isValid(ticket)
     }
+
+    interface Init : (TicketCheck) -> Unit
 }

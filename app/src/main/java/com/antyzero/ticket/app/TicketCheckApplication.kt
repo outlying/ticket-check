@@ -19,7 +19,10 @@ class TicketCheckApplication : Application() {
     private val ticketCheck: TicketCheck by lazy {
         TicketCheck(
             repository,
-            emptySet()
+            emptySet(),
+            setOf(
+                BuildTypeInit
+            )
         )
     }
 
