@@ -43,7 +43,7 @@ class TicketCheck(
         return repository.all()
     }
 
-    private fun <T : Ticket.Data> validate(ticket: Ticket<T>): Ticket.Status? {
+    private suspend fun <T : Ticket.Data> validate(ticket: Ticket<T>): Ticket.Status? {
         @Suppress("UNCHECKED_CAST")
         return (ticketValidators.values.first() as TicketValidator<T>).isValid(ticket)
     }
