@@ -1,11 +1,13 @@
 package com.antyzero.ticket.core
 
+import com.antyzero.ticket.core.model.SealedTestData
 import com.antyzero.ticket.core.model.Ticket
 import com.antyzero.ticket.core.repository.DumbRepository
 import com.antyzero.ticket.core.validator.TicketValidator
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
+import kotlin.reflect.full.isSubclassOf
 
 internal class TicketCheckTest {
 
@@ -46,11 +48,6 @@ internal class TicketCheckTest {
                 )
             }
         }
-    }
-
-    private sealed class SealedTestData : Ticket.Data() {
-        data class A(val id: Any) : SealedTestData()
-        data class B(val id: Any) : SealedTestData()
     }
 
     private class SealedTestDataValidator : TicketValidator<SealedTestData> {

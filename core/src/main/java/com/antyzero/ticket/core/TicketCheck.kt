@@ -5,6 +5,7 @@ import com.antyzero.ticket.core.repository.Repository
 import com.antyzero.ticket.core.utils.genericOfInterface
 import com.antyzero.ticket.core.validator.TicketValidator
 import kotlin.reflect.KClass
+import kotlin.reflect.full.isSubclassOf
 
 class TicketCheck(
     private val repository: Repository,
@@ -29,8 +30,14 @@ class TicketCheck(
     @Suppress("UNCHECKED_CAST")
     suspend fun <T : Ticket.Data> addTicket(ticket: Ticket<T>): Ticket<*> {
         val dataType = ticket.dataType() as KClass<in Ticket.Data>
-        val status = (ticketValidators[dataType] as? TicketValidator<T>)?.isValid(ticket)
-            ?: throw IllegalStateException("Given ticket with data type $dataType is not supported")
+        val validatorDataClass = ticketValidators.keys.firstOrNull {
+            dataType.isSubclassOf(it)
+        }
+        val ticketValidator: TicketValidator<T> =
+            (ticketValidators[validatorDataClass] as? TicketValidator<T>)
+                ?: throw IllegalStateException("Given ticket with data type $dataType is not supported")
+        val status = ticketValidator.isValid(ticket) ?: Ticket.Status.Invalid
+        // TODO it might be good idea to notify about validation
 
         val verifiedTicket = ticket.copy(status = status)
 
