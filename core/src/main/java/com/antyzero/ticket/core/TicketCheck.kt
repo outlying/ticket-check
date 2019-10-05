@@ -29,20 +29,8 @@ class TicketCheck(
 
     @Suppress("UNCHECKED_CAST")
     suspend fun <T : Ticket.Data> addTicket(ticket: Ticket<T>): Ticket<*> {
-        val dataType = ticket.dataType() as KClass<in Ticket.Data>
-        val validatorDataClass = ticketValidators.keys.firstOrNull {
-            dataType.isSubclassOf(it)
-        }
-        val ticketValidator: TicketValidator<T> =
-            (ticketValidators[validatorDataClass] as? TicketValidator<T>)
-                ?: throw IllegalStateException("Given ticket with data type $dataType is not supported")
-        val status = ticketValidator.isValid(ticket) ?: Ticket.Status.Invalid
-        // TODO it might be good idea to notify about validation
-
-        val verifiedTicket = ticket.copy(status = status)
-
+        val verifiedTicket = ticket.copy(status = validate(ticket))
         repository.addTicket(verifiedTicket)
-
         return verifiedTicket
     }
 
@@ -50,9 +38,17 @@ class TicketCheck(
         return repository.all()
     }
 
-    private suspend fun <T : Ticket.Data> validate(ticket: Ticket<T>): Ticket.Status? {
-        @Suppress("UNCHECKED_CAST")
-        return (ticketValidators.values.first() as TicketValidator<T>).isValid(ticket)
+    @Suppress("UNCHECKED_CAST")
+    private suspend fun <T : Ticket.Data> validate(ticket: Ticket<T>): Ticket.Status {
+
+        val dataType = ticket.dataType() as KClass<in Ticket.Data>
+        val validatorDataClass = ticketValidators.keys.firstOrNull {
+            dataType.isSubclassOf(it)
+        }
+        val ticketValidator: TicketValidator<T> =
+            (ticketValidators[validatorDataClass] as? TicketValidator<T>)
+                ?: throw IllegalStateException("Given ticket with data type $dataType is not supported")
+        return ticketValidator.isValid(ticket) ?: Ticket.Status.Invalid
     }
 
     interface Init : (TicketCheck) -> Unit
