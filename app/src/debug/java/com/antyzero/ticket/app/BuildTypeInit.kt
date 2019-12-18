@@ -15,7 +15,7 @@ object BuildTypeInit : TicketCheck.Init {
                 Ticket(
                     id = "2170708",
                     data = KKMData.Normal(
-                        cardNumber = BigInteger.valueOf(20603546690)
+                        cardNumber = 20603546690L
                     ),
                     status = Ticket.Status.Invalid
                 )

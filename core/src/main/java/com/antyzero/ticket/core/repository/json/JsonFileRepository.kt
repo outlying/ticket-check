@@ -70,9 +70,9 @@ class JsonFileRepository(private val file: File) : Repository {
 
         fun createAdapter(): JsonAdapter<List<Ticket<*>>> {
 
-            val moshi = Moshi.Builder().apply {
-                add(JsonTicket::class.java, TicketAdapter)
-            }.build()
+            val moshi = Moshi.Builder()
+                .add(JsonTicket::class.java, TicketAdapter)
+                .build()
 
             return moshi.adapter(
                 newParameterizedType(

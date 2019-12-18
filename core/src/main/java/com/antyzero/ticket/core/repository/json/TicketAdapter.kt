@@ -39,14 +39,12 @@ object TicketAdapter : JsonAdapter<Ticket<*>>() {
     @ToJson
     override fun toJson(writer: JsonWriter, value: Ticket<*>?) {
 
-        if (value == null) {
-            throw IllegalArgumentException("Null value is not supported")
-        }
+        requireNotNull(value) { "Null value is not supported" }
 
         writer.beginObject()
 
         writer.name("id")
-        writer.value(value.id.toString())
+        writer.value(value.id)
 
         writer.name("statusType")
         writer.value(value.status::class.java.name.toString())

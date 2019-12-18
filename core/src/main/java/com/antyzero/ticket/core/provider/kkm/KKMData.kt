@@ -15,7 +15,7 @@ sealed class KKMData : Ticket.Data() {
      * To verify those cards [cardNumber] and client ID ([Ticket.id]) is needed
      */
     data class Normal(
-        val cardNumber: BigInteger
+        val cardNumber: Long
     ) : KKMData()
 
     /**

@@ -7,6 +7,11 @@ import com.antyzero.ticket.core.validator.TicketValidator
 import kotlin.reflect.KClass
 import kotlin.reflect.full.isSubclassOf
 
+/**
+ *
+ *
+ * @param [init] allows to modify initial state of [TicketCheck] instance
+ */
 class TicketCheck(
     private val repository: Repository,
     validators: Collection<TicketValidator<*>>,
@@ -51,5 +56,8 @@ class TicketCheck(
         return ticketValidator.isValid(ticket) ?: Ticket.Status.Invalid
     }
 
+    /**
+     * For init code
+     */
     interface Init : (TicketCheck) -> Unit
 }
