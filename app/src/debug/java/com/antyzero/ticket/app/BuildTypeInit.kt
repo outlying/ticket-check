@@ -5,8 +5,10 @@ import com.antyzero.ticket.core.model.Ticket
 import com.antyzero.ticket.core.provider.kkm.KKMData
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.math.BigInteger
 
+/**
+ * This [TicketCheck.Init] implementation is used to provide initial setup for app in debug type
+ */
 object BuildTypeInit : TicketCheck.Init {
 
     override fun invoke(ticketCheck: TicketCheck) {
