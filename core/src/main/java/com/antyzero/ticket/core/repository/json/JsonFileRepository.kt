@@ -28,9 +28,7 @@ class JsonFileRepository(private val file: File) : Repository {
                     ?: throw IllegalStateException("Stuff went wrong")
             }
         } else {
-            if (!file.createNewFile()) {
-                throw IllegalStateException("Unable to create file")
-            }
+            check(file.createNewFile()) { "Unable to create file" }
             tickets = mutableSetOf()
             dumpCurrentListToFile()
         }
