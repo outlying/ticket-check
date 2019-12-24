@@ -1,10 +1,13 @@
 package com.antyzero.ticket.app.screen
 
+import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.antyzero.ticket.app.R
+import com.antyzero.ticket.app.extension.context
+import com.antyzero.ticket.app.i18n.TicketDataStringers
 import com.antyzero.ticket.core.model.Ticket
 
 class TicketAdapter : ListAdapter<Ticket<*>, TicketViewHolder>(diff) {
@@ -18,8 +21,12 @@ class TicketAdapter : ListAdapter<Ticket<*>, TicketViewHolder>(diff) {
     override fun onBindViewHolder(holder: TicketViewHolder, position: Int) {
         with(getItem(position)) {
             holder.textViewId.text = id
-            holder.textViewData.text = data.toString()
+            holder.textViewData.text = data.convertToReadableGoogoo(holder.context)
         }
+    }
+
+    private fun Ticket.Data.convertToReadableGoogoo(context: Context): CharSequence {
+        return TicketDataStringers.i18n(context, this)
     }
 
     companion object {

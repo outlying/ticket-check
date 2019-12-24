@@ -27,7 +27,7 @@ sealed class KKMData : Ticket.Data() {
      */
     data class Student(
         val collegeId: Int
-    ) {
+    ) : KKMData() {
 
         init {
             require(Collage.values().map { it.id }.contains(collegeId)) {
